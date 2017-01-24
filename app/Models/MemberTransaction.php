@@ -9,11 +9,20 @@ class MemberTransaction extends BaseModel
     protected $table = 'member_transactions';
 
     protected $rules = [
-        'transaction_id' => 'nullable|exists:transactions:id',
+        'transaction_id' => 'required|exists:transactions,id',
         'member_id' => 'required|exists:members,id',
         'value' => 'required|numeric',
         'description' => 'required|max:150'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saved(function (self $transaction) {
+            $transaction->member->updateCachedBudget();
+        });
+    }
 
     public function member()
     {

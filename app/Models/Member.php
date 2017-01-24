@@ -33,6 +33,13 @@ class Member extends BaseModel
         return $this->hasMany('App\Models\MemberTransaction');
     }
 
+    public function updateCachedBudget()
+    {
+        $sum = (int)$this->memberTransactions()->sum('value');
+        $this->attributes['cached_budget'] = $sum;
+        $this->save();
+    }
+
     public function setCachedBudgetAttribute()
     {
         throw new \App\Exceptions\ReadOnlyAttributeException("Can not set cachedBudget directly.");

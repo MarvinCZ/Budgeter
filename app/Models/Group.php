@@ -11,7 +11,6 @@ class Group extends BaseModel
 
     protected $rules = [
         'name' => 'required|max:50',
-        'cached_budget' => 'required|numeric',
         'user_id' => 'nullable|exists:users,id'
     ];
 
