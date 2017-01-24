@@ -16,7 +16,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
@@ -25,7 +25,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
     public function generateRandomString($length)
     {
-        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+        return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length / strlen($x)))), 1, $length);
     }
 
     public function getAuthToken($user, $password)
@@ -41,6 +41,24 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $user = factory(\App\Models\User::class)->create();
         $group = factory(\App\Models\Group::class)->make();
         $group->user()->associate($user);
+        $group->save();
         return $group;
+    }
+
+    public function getValidMember()
+    {
+        $member = factory(\App\Models\Member::class)->make();
+        $group = factory(\App\Models\Group::class)->create();
+        $member->group()->associate($group);
+        $member->save();
+        return $member;
+    }
+
+    public function getValidTransaction()
+    {
+        $group = $this->getValidGroup();
+        $transaction = factory(\App\Models\Transaction::class)->make();
+        $transaction->group()->associate($group);
+        return $transaction;
     }
 }

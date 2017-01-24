@@ -26,3 +26,16 @@ $factory->define(App\Models\Group::class, function (Faker\Generator $faker) {
         'cached_budget' => $faker->randomNumber(4),
     ];
 });
+
+$factory->define(App\Models\Member::class, function (Faker\Generator $faker) {
+    return [
+        'name' => str_random(30),
+    ];
+});
+
+$factory->define(App\Models\Transaction::class, function (Faker\Generator $faker) {
+    return [
+        'value' => $faker->randomNumber(3),
+        'description' => str_random(70),
+    ];
+});

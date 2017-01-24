@@ -83,24 +83,4 @@ class User extends Authenticatable implements JWTSubject
             'email' => $this->email
         ];
     }
-
-    /**
-     * The users that belong to group
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany relation
-     */
-    public function groups()
-    {
-        return $this->belongsToMany('App\Models\Group', 'user_group');
-    }
-
-    /**
-     * The feature requests by the user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany relation
-     */
-    public function featureRequests()
-    {
-        return $this->hasMany('App\Models\FeatureRequest', 'feature_request');
-    }
 }

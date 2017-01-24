@@ -63,6 +63,36 @@ class GroupTest extends TestCase
 
         $group->user()->associate($user);
         $this->assertEquals(1, $group->user()->count());
-        $this->assertEquals($user, $group->user);
+        $this->assertTrue($group->user->is($user));
+    }
+
+    /**
+     * Test group-member relation
+     */
+    public function testGroupMemberRelation()
+    {
+        $group = $this->getValidGroup();
+        $member1 = factory(\App\Models\Member::class)->make();
+        $member2 = factory(\App\Models\Member::class)->make();
+        $this->assertEquals(0, $group->members()->count());
+
+        $group->members()->saveMany([$member1, $member2]);
+        $this->assertEquals(2, $group->members()->count());
+        $this->assertTrue($group->members->first()->is($member1));
+    }
+
+    /**
+     * Test group-transaction relation
+     */
+    public function testGroupTransactionRelation()
+    {
+        $group = $this->getValidGroup();
+        $transaction1 = factory(\App\Models\Transaction::class)->make();
+        $transaction2 = factory(\App\Models\Transaction::class)->make();
+        $this->assertEquals(0, $group->transactions()->count());
+
+        $group->transactions()->saveMany([$transaction1, $transaction2]);
+        $this->assertEquals(2, $group->transactions()->count());
+        $this->assertTrue($group->transactions->first()->is($transaction1));
     }
 }

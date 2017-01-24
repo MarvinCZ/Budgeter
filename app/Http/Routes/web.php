@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', 'GroupController@dashboard');
+
 Route::get('/test-exception', function () {
     throw new \Exception("xxx");
 });

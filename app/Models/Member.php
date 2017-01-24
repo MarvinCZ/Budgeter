@@ -20,10 +20,15 @@ class Member extends BaseModel
 
     public function group()
     {
-        return $this->belongsTo('App\Models\Group');
+        return $this->belongsTo('App\Models\Group', 'group_id');
     }
 
-    public function memberTransaction()
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function memberTransactions()
     {
         return $this->hasMany('App\Models\MemberTransaction');
     }
