@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Watson\Validating\ValidatingTrait;
 
-class Group extends Model
+class Group extends BaseModel
 {
     use ValidatingTrait;
 
