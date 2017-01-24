@@ -11,5 +11,5 @@
       .content
         .title Dashboard
         %p {{ $user->name }} {{ $user->email }}
-        %p {{ $members[0]->name }}
+
         //TODO: Try to echo all members in $members via some kind of HAML loop
