@@ -12,11 +12,21 @@ class Group extends BaseModel
     protected $rules = [
         'name' => 'required|max:50',
         'cached_budget' => 'required|numeric',
-        'user_id' => 'exists:users,id'
+        'user_id' => 'nullable|exists:users,id'
     ];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function members()
+    {
+        return $this->hasMany('App\Models\Member');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Transaction');
     }
 }
