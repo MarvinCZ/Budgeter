@@ -10,23 +10,33 @@ use App\Models\Group;
 
 class GroupController extends Controller
 {
-    public function dashboard()
+    public function dashboard($group_id)
     {
-        return view('dashboard', ['user' => User::first(), 'members' => Member::paginate(3)]);
+        $group_id = 1;
+        //TODO: Do not send the current user's member account with the other members because no one can owe themselves
+        return view('dashboard', ['user' => User::first(), 'group' => Group::where('id', $group_id)->first()]);
     }
 
     public function administrateMembers($group_id)
     {
-        return view('administrateMembers', ['user' => User::first(), 'members' => Member::paginate(3), 'group' => Group::first()]);
+        $group = Group::first();
+        $members = $group->members()->get();
+        return view('administrateMembers', ['user' => User::first(), 'members' => $members, 'group' => $group]);
     }
 
-    public function addMember($group_id)
+    public function addMembers($group_id)
     {
-        return redirect("/group/#{$group_id}/members");
+        return redirect()->route('members', $group_id);
     }
 
-    public function removeMember($group_id)
+    public function removeMembers($group_id)
     {
-        return redirect("/group/#{$group_id}/members");
+        $members = Member::find($_POST['member_ids']);
+
+        foreach($members as $member) {
+            $member->delete();
+        }
+
+        return redirect()->route('members', $group_id);
     }
 }

@@ -221,7 +221,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Intervention' => Intervention\Image\ImageServiceProvider::class,
-        'Debugbar' => Barryvdh\Debugbar\ServiceProvider::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

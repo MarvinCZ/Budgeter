@@ -37,22 +37,6 @@ class GroupTest extends TestCase
     }
 
     /**
-     * Test validators on cachedBudget attribute
-     */
-    public function testCachedBudgetValidators()
-    {
-        $group = $this->getValidGroup();
-        $group->cachedBudget = '';
-        $this->assertFalse($group->save());
-
-        $group->cachedBudget = 'aaaa';
-        $this->assertFalse($group->save());
-
-        $group->cachedBudget = 1000;
-        $this->assertTrue($group->save());
-    }
-
-    /**
      * Test group-user relation
      */
     public function testGroupUserRelation()

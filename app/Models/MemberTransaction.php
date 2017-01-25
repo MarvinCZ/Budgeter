@@ -26,11 +26,11 @@ class MemberTransaction extends BaseModel
 
     public function member()
     {
-        return $this->belongsTo('App\Models\Member');
+        return $this->belongsTo('App\Models\Member', 'member_id');
     }
 
     public function transaction()
     {
-        return $this->belongsTo('App\Models\Transaction');
+        return $this->belongsTo('App\Models\Transaction', 'transaction_id');
     }
 }
