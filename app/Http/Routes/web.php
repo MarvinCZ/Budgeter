@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/testform', function () {
+    return view('testform');
+});
+Route::get('/testformbackend', 'MemberController@testform')->name('testformbackend');
+
 Route::get('/group/{group_id}/dashboard', 'GroupController@dashboard')->name('dashboard');
 
 Route::get('/group/{group_id}/members', 'GroupController@administrateMembers')->name('members');
