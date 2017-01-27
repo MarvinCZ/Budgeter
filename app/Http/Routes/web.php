@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testform', function () {
-    return view('testform');
-});
-
 Route::resource('group', 'GroupController');
 
 Route::resource('group/{group}/member', 'MemberController', [
@@ -28,12 +24,3 @@ Route::resource('group/{group}/member', 'MemberController', [
 Route::resource('group/{group}/transaction', 'TransactionController', [
     'only' => ['index', 'store', 'show', 'update', 'destroy']
 ]);
-
-Route::post('/group/{group_id}/create-transaction', 'TransactionController@create')->name('createTransaction');
-
-
-Route::get('/testformbackend', 'MemberController@testform')->name('testformbackend');
-
-Route::get('/test-exception', function () {
-    throw new \Exception("xxx");
-});
