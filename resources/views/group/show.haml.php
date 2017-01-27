@@ -13,7 +13,7 @@
   %p {{ $member->name }}: {{ $member->cachedBudget }} Kč
 
 %h2 Create new transaction
-%form{:method => "post", :action => route('createTransaction', $group->id)}
+%form{:method => "post", :action => route('transaction.store', $group->id)}
   %input{:type => "textarea", :name => "t_description"} Description
   %input{:type => "number", :name => "t_value", :min => 1} Value
   - foreach($group->members as $member)

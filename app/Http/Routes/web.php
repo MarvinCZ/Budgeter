@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
 Route::resource('group', 'GroupController');
 
 Route::resource('group/{group}/member', 'MemberController', [
