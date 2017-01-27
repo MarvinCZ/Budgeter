@@ -15,6 +15,8 @@ abstract class BaseModel extends Model
 {
     use ValidatingTrait;
 
+    protected $observables = ['validating', 'validated'];
+
     /**
      * Get an attribute from the model. Tries also converting camelCase to snake_case
      *

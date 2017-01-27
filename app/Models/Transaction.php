@@ -8,40 +8,41 @@ class Transaction extends BaseModel
 {
     protected $table = 'transactions';
 
+    protected $fillable = ['value', 'description', 'member_ids'];
+
     protected $rules = [
         'group_id' => 'required|exists:groups,id',
         'value' => 'required|numeric',
-        'description' => 'required|max:150'
+        'description' => 'required|max:150',
+        'member_ids' => 'has_members|valid_members'
     ];
 
-    protected $attributes = [
-        'value' => 0
-    ];
+    public static function boot()
+    {
+        parent::boot();
+
+        \Validator::extend('valid_members', function($attributes, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            $count = Member::whereIn('id', $value)->count();
+            return $count == count($value);
+        });
+
+        \Validator::extend('has_members', function($attributes, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            return count($value) > 0;
+        });
+
+        static::saved(function (self $transaction) {
+            //$transaction->member->updateCachedBudget();
+        });
+    }
+
 
     public function group()
     {
         return $this->belongsTo('App\Models\Group');
     }
 
-    public function updateValue()
-    {
-        $sum = (int)$this->memberTransactions()->sum('value');
-        $this->attributes['value'] = $sum;
-        $this->save();
-    }
-
     public function memberTransactions()
     {
         return $this->hasMany('App\Models\MemberTransaction');
-    }
-
-    public function setValueAttribute()
-    {
-        throw new \App\Exceptions\ReadOnlyAttributeException("Can not set value directly.");
-    }
-
-    public function isCompeted()
-    {
-        return $this->value == 0;
     }
 }

@@ -6,7 +6,7 @@
 	 */
 	'mthaml' => array(
 		'environment' => 'php',
-		'options' => array(),
+        'options' => array(),
 		'filters' => array(),
 	),
 

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
+use App\Models\Member;
 use App\Models\Transaction;
 use App\Models\MemberTransaction;
+use \Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -26,35 +28,7 @@ class TransactionController extends Controller
      */
     public function create(\App\Models\Group $group)
     {
-        $transaction = new Transaction();
-        $transaction->description = $_POST['t_description'];
-        $transaction->group()->associate($group);
-        $transaction->save();
-
-        $payer = $_POST['t_payer'];
-        $this->createMemberTransaction($transaction, $payer, $_POST['t_value']);
-        $count = count($_POST['t_member_ids']);
-        if($count == 0)
-            //TODO: Vyfuckovat
-        $amount = $_POST['t_value'] / $count;
-
-        foreach($_POST['t_member_ids'] as $member_id) {
-            $this->createMemberTransaction($transaction, $member_id, -$amount);
-        }
-
-        return redirect()->route('dashboard', $group_id);
-    }
-
-    //TODO: Remake function to just make the model, not create and use 1 query to insert all of them
-    private function createMemberTransaction($transaction, $member_id, $value)
-    {
-        $mTransaction = new MemberTransaction();
-        $mTransaction->description = $transaction->description;
-        $mTransaction->value = $value;
-        //TODO: Use relationships
-        $mTransaction->member_id = $member_id;
-        $mTransaction->transaction_id = $transaction->id;
-        $mTransaction->save();
+        return redirect()->route('group.show', $group);
     }
 
     /**
@@ -63,9 +37,32 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(\App\Models\Group $group, Request $request)
     {
-        //
+        $data = $request->all();
+
+        $transaction = new Transaction($data);
+        $transaction->group()->associate($group);
+
+        if (!$transaction->save()) {
+            return redirect()->route('group.show', $group)
+                ->withErrors($transaction->getErrors())
+                ->withInput();
+        }
+
+        //TODO vytvorit dluznou transakci
+
+        $price = (int)($data['value'] / count($data['members_id']));
+        $data = [];
+        foreach ($request->all()['member_ids'] as $id) {
+            $data []= [
+                'description' => $transaction->description,
+                'value' => $price,
+                'member_id' => $id,
+                'transaction_id' => $transaction->id
+            ];
+        }
+        MemberTransaction::insert($data);
     }
 
     /**
