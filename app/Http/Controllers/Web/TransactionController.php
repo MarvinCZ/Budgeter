@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Web;
 
-use Debugbar;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Transaction;
@@ -13,7 +11,7 @@ class TransactionController extends Controller
 {
     public function create($group_id)
     {
-        $group = Group::where('id', $group_id)->first();
+        $group = Group::findOrFail($group_id);
         $transaction = new Transaction();
         $transaction->description = $_POST['t_description'];
         $transaction->group()->associate($group);
@@ -21,7 +19,10 @@ class TransactionController extends Controller
 
         $payer = $_POST['t_payer'];
         $this->createMemberTransaction($transaction, $payer, $_POST['t_value']);
-        $amount = $_POST['t_value'] / count($_POST['t_member_ids']);
+        $count = count($_POST['t_member_ids']);
+        if($count == 0)
+            //TODO: Vyfuckovat
+        $amount = $_POST['t_value'] / $count;
 
         foreach($_POST['t_member_ids'] as $member_id) {
             $this->createMemberTransaction($transaction, $member_id, -$amount);

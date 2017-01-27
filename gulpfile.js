@@ -10,6 +10,6 @@ elixir(function(mix) {
     mix.coffee('app.coffee');
     mix.copy('bower_components/bootstrap/fonts', 'public/fonts');
     mix.browserSync({
-        proxy: "partyapp.loc"
+        proxy: "budgeter.loc"
     });
 });
