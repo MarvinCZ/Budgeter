@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Member;
@@ -10,33 +12,82 @@ use App\Models\Group;
 
 class GroupController extends Controller
 {
-    public function dashboard($group_id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $group_id = 1;
-        //TODO: Do not send the current user's member account with the other members because no one can owe themselves
-        return view('dashboard', ['user' => User::first(), 'group' => Group::where('id', $group_id)->first()]);
+        //
     }
 
-    public function administrateMembers($group_id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $group = Group::first();
-        $members = $group->members()->get();
-        return view('administrateMembers', ['user' => User::first(), 'members' => $members, 'group' => $group]);
+        //
     }
 
-    public function addMembers($group_id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        return redirect()->route('members', $group_id);
+        //
     }
 
-    public function removeMembers($group_id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Group  $group
+     * @return \Illuminate\Http\Response
+     */
+    public function show(\App\Models\Group $group)
     {
-        $members = Member::find($_POST['member_ids']);
+        return view('group.show', [
+            'user' => User::first(),
+            'group' => $group
+        ]);
+    }
 
-        foreach($members as $member) {
-            $member->delete();
-        }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-        return redirect()->route('members', $group_id);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

@@ -9,9 +9,23 @@ use App\Models\MemberTransaction;
 
 class TransactionController extends Controller
 {
-    public function create($group_id)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $group = Group::findOrFail($group_id);
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(\App\Models\Group $group)
+    {
         $transaction = new Transaction();
         $transaction->description = $_POST['t_description'];
         $transaction->group()->associate($group);
@@ -41,5 +55,53 @@ class TransactionController extends Controller
         $mTransaction->member_id = $member_id;
         $mTransaction->transaction_id = $transaction->id;
         $mTransaction->save();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Group  $group
+     * @return \Illuminate\Http\Response
+     */
+    public function show(\App\Models\Group $group)
+    {
+        return view('group.show', [
+            'user' => User::first(),
+            'group' => $group
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

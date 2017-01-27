@@ -18,17 +18,21 @@ Route::get('/', function () {
 Route::get('/testform', function () {
     return view('testform');
 });
-Route::get('/testformbackend', 'MemberController@testform')->name('testformbackend');
 
-Route::get('/group/{group_id}/dashboard', 'GroupController@dashboard')->name('dashboard');
+Route::resource('group', 'GroupController');
 
-Route::get('/group/{group_id}/members', 'GroupController@administrateMembers')->name('members');
-Route::post('/group/{group_id}/add-members', 'GroupController@addMembers')->name('addMembers');
-Route::post('/group/{group_id}/remove-members', 'GroupController@removeMembers')->name('removeMembers');
+Route::resource('group/{group}/member', 'MemberController', [
+    'only' => ['store', 'update', 'destroy']
+]);
 
-Route::get('/group/{group_id}/leave', 'MemberController@leaveGroup')->name('leaveGroup');
+Route::resource('group/{group}/transaction', 'TransactionController', [
+    'only' => ['index', 'store', 'show', 'update', 'destroy']
+]);
 
 Route::post('/group/{group_id}/create-transaction', 'TransactionController@create')->name('createTransaction');
+
+
+Route::get('/testformbackend', 'MemberController@testform')->name('testformbackend');
 
 Route::get('/test-exception', function () {
     throw new \Exception("xxx");
