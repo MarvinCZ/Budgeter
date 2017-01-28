@@ -4,8 +4,8 @@
 
 @section('content')
 
-.row
-  %h2 List of groups
+%h2.text-center List of groups
+.row.text-center
   .col-md-6
     %h3 Groups that you are in
     - if (count(Auth::user()->relatedGroups) > 0)
@@ -15,7 +15,7 @@
             %a{href: route('group.show', $group->id)} #{ $group->name }
           %strong{class: $group->pivot->cached_budget >= 0 ? 'text-success' : 'text-danger'} #{ $group->pivot->cached_budget } Kč
     - else
-      %p.text-center You are not in any groups
+      %p You are not in any groups
   .col-md-6
     %h3 Groups that you created
     - if (count(Auth::user()->groups) > 0)
@@ -31,9 +31,9 @@
               %a{href: route('group.destroy', $group->id), 'data-method' => "DELETE", 'data-token' => csrf_token()}
                 %i.fa.fa-remove Remove
     - else
-      %p.text-center You did not create any groups
+      %p You did not create any groups
 
-.row
+.row.text-center
   %a.btn.btn-default.btn-lg{href: route('group.create')} Create new group
 
 @stop
