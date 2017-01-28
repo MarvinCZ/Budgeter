@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Member;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Group;
 
 class GroupController extends Controller
@@ -19,7 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        return view('group.index');
     }
 
     /**
@@ -29,7 +26,8 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        $group = new Group();
+        return view('group.edit', ['group' => $group, 'action' => 'store']);
     }
 
     /**
@@ -40,7 +38,12 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $group = new Group($data);
+        $group->user()->associate(Auth::user());
+        $group->save();
+
+        return redirect()->route('group.show', $group);
     }
 
     /**
@@ -59,12 +62,12 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(\App\Models\Group $group)
     {
-        //
+        return view('group.edit', ['group' => $group, 'action' => 'update']);
     }
 
     /**
@@ -76,7 +79,12 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $group = Group::findOrFail($id);
+        $group->name = $data['name'];
+        $group->save();
+
+        return redirect()->route('group.index');
     }
 
     /**

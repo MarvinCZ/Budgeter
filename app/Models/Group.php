@@ -14,6 +14,8 @@ class Group extends BaseModel
         'user_id' => 'nullable|exists:users,id'
     ];
 
+    protected $fillable = ['name'];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
