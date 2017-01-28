@@ -17,7 +17,7 @@
       .container
         .navbar-header
           %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-            %span.sr-only Toggle navigation
+            %span.sr-only #{ trans('layout.toggle_navigation') }
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
@@ -27,7 +27,7 @@
             @section('navigation')
             - if(Auth::user())
               %li
-                %a{href: route('group.index')} Group list
+                %a{href: route('group.index')} #{ trans('layout.group_list') }
             @show
 
           %ul.nav.navbar-nav.navbar-right
@@ -36,12 +36,12 @@
                 %a{href: '#'}
                   = Auth::user()->name
               %li
-                %a{href: route('logout.post'), 'data-method' => "DELETE", 'data-token' => csrf_token()} Logout
+                %a{href: route('logout.post'), 'data-method' => "DELETE", 'data-token' => csrf_token()} #{ trans('layout.logout.action') }
             - else
               %li
-                %a{href: route("login.get")} Login
+                %a{href: route("login.get")} #{ trans('layout.login.action') }
               %li
-                %a{href: route("register.get")} Register
+                %a{href: route("register.get")} #{ trans('layout.register.action') }
 
     .container
       .content
