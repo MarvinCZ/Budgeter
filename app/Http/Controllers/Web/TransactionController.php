@@ -55,7 +55,7 @@ class TransactionController extends Controller
         foreach ($request->all()['member_ids'] as $id) {
             $data []= [
                 'description' => $transaction->description,
-                'value' => $price,
+                'value' => -$price,
                 'member_id' => $id,
                 'transaction_id' => $transaction->id
             ];

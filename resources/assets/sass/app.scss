@@ -26,3 +26,51 @@ body {
     font-size: 96px;
     font-family: 'Lato', sans-serif;
 }
+
+.members {
+    .member {
+        background-color: #D8D8D8;
+
+        .picture {
+            background-color: #C4C4C4;
+            padding: 10px;
+        }
+
+        .detail {
+            padding: 10px;
+            overflow: auto;
+            font-size: 1.2em;
+            font-weight: bold;
+
+            .name {
+                float: left;
+            }
+
+            .budget {
+                float: right;
+            }
+
+            .possitive {
+                color: green;
+            }
+
+            .negative {
+                color: red;
+            }
+        }
+    }
+    .me {
+        background-color: #FFF670;
+    }
+
+    .selectable {
+        cursor: pointer;
+    }
+
+    .selected {
+        background-color: #98EF95;
+        .picture {
+            background-color: #90E487;
+        }
+    }
+}

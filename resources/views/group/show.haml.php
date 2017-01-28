@@ -4,35 +4,62 @@
 
 @section('content')
 
-.title Dashboard
-%p Logged as: {{ $user->name }}
-
 %h2 Group balance
-%p You: {{ $group->members[0]->cachedBudget }} Kč
-- foreach($group->members as $member)
-  %p {{ $member->name }}: {{ $member->cachedBudget }} Kč
+.row.members
+  - foreach($group->members as $member)
+    .col-md-2
+      .member{class: $member->user_id == Auth::user()->id ? 'me' : ''}
+        .picture
+          %img.img-responsive{src: 'images/avatars/default-user.png'}
+        .detail
+          .name
+            = $member->name
+          .budget{class: $member->cachedBudget >= 0 ? 'possitive' : 'negative'}
+            = $member->cachedBudget . ' CZK'
 
 %h2 Create new transaction
-.errors
-  - foreach ($errors->all() as $error)
-    .error
-      = $error
-
-!= Form::open(['route' => ['transaction.store', $group]])
+!= Form::open(['route' => ['transaction.store', $group], 'class' => 'form-horizontal'])
+!= Form::token()
 
 //Description
-!= Form::label('description', 'What did you pay for?')
-!= Form::text('description')
+.form-group{class: $errors->has('description') ? 'has-error' : ''}
+  != Form::label('description', 'What did you pay for?', ['class' => 'col-sm-3 control-label'])
+  .col-sm-9
+    != Form::text('description', null, ['class' => 'form-control'])
+    - if ($errors->has('description'))
+      %span.help-block
+        %strong #{$errors->first('description')}
 
 //Value
-!= Form::label('value', 'How much did you pay?')
-!= Form::number('value', 100)
+.form-group{class: $errors->has('value') ? 'has-error' : ''}
+  != Form::label('value', 'How much did you pay?', ['class' => 'col-sm-3 control-label'])
+  .col-sm-9
+    != Form::number('value', 100, ['class' => 'form-control'])
+    - if ($errors->has('value'))
+      %span.help-block
+        %strong #{$errors->first('value')}
 
 //Select members
-!= Form::label('member_ids[]', 'Who did you pay for?')
-!= Form::select('member_ids[]', ['1' => 'Member 1','2' => 'Member 2','3' => 'Member 3'], null, ['multiple' => true])
+.form-group{class: $errors->has('member_ids') ? 'has-error' : ''}
+  != Form::label('member_ids[]', 'Who did you pay for?', ['class' => 'col-sm-3 control-label'])
+  .col-sm-9
+    .row.members
+      - foreach($group->members as $member)
+        .col-md-2
+          .member.selectable
+            != Form::checkbox('member_ids[]', $member->id, null, ['class' => 'hidden'])
+            .picture
+              %img.img-responsive{src: 'images/avatars/default-user.png'}
+            .detail
+              .name
+                = $member->name
+    - if ($errors->has('member_ids'))
+      %span.help-block
+        %strong #{$errors->first('member_ids')}
 
-!= Form::submit('Create a transaction')
+.form-group
+  .col-sm-offset-3.col-sm-9
+    != Form::submit('Create a transaction', ['class' => 'btn btn-block btn-primary'])
 
 != Form::close()
 

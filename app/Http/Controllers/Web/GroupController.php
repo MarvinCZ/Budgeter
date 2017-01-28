@@ -52,7 +52,6 @@ class GroupController extends Controller
     public function show(\App\Models\Group $group)
     {
         return view('group.show', [
-            'user' => User::first(),
             'group' => $group
         ]);
     }
