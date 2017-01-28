@@ -48,4 +48,14 @@ abstract class BaseModel extends Model
     {
         return parent::setAttribute(snake_case($key), $value);
     }
+
+    public function addRule($key, $rule)
+    {
+        if (array_key_exists($key, $this->rules)) {
+            $this->rules[$key] .= "|" . $rule;
+        }
+        else {
+            $this->rules[$key] = $rule;
+        }
+    }
 }

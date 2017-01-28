@@ -4,11 +4,6 @@
 
 @section('content')
 
-.errors
-  - foreach ($errors->all() as $error)
-    .error
-      = $error
-
 .title Dashboard
 %p Logged as: {{ $user->name }}
 
@@ -18,6 +13,11 @@
   %p {{ $member->name }}: {{ $member->cachedBudget }} Kč
 
 %h2 Create new transaction
+.errors
+  - foreach ($errors->all() as $error)
+    .error
+      = $error
+
 != Form::open(['route' => ['transaction.store', $group]])
 
 //Description

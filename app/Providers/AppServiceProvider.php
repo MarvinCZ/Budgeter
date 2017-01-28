@@ -14,8 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DB::listen(function($query){
-            //echo($query->sql . "\n");
+        \Validator::extend('valid_members', function($attributes, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            $group = $validator->attributes()[$parameters[0]];
+            $count = $group->members()->
+                whereIn('id', $value)->
+                count();
+            return $count == count($value);
         });
     }
 

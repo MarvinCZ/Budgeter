@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTransaction;
 use App\Models\Group;
 use App\Models\Member;
 use App\Models\Transaction;
@@ -37,22 +38,19 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(\App\Models\Group $group, Request $request)
+    public function store(\App\Models\Group $group, StoreTransaction $request)
     {
         $data = $request->all();
 
         $transaction = new Transaction($data);
         $transaction->group()->associate($group);
 
-        if (!$transaction->save()) {
-            return redirect()->route('group.show', $group)
-                ->withErrors($transaction->getErrors())
-                ->withInput();
-        }
+        //should not happen request is validated already
+        $transaction->saveOrFail();
 
-        //TODO vytvorit dluznou transakci
+        //TODO create revers transaction
 
-        $price = (int)($data['value'] / count($data['members_id']));
+        $price = (int)($data['value'] / count($data['member_ids']));
         $data = [];
         foreach ($request->all()['member_ids'] as $id) {
             $data []= [
@@ -63,6 +61,8 @@ class TransactionController extends Controller
             ];
         }
         MemberTransaction::insert($data);
+
+        return redirect()->route('group.show', $group);
     }
 
     /**
