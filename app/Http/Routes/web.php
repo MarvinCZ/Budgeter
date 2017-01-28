@@ -19,8 +19,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('group', 'GroupController');
 
-Route::resource('group/{group}/member', 'MemberController', [
-    'only' => ['store', 'update', 'destroy']
+Route::resource('group/{group}/members', 'MemberController', [
+    'only' => ['create', 'store', 'show', 'edit', 'update', 'destroy']
 ]);
 
 Route::resource('group/{group}/transaction', 'TransactionController', [
@@ -29,7 +29,7 @@ Route::resource('group/{group}/transaction', 'TransactionController', [
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login.get');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout.post');
+Route::delete('logout', 'Auth\LoginController@logout')->name('logout.post');
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register.get');
 Route::post('register', 'Auth\RegisterController@register')->name('register.post');

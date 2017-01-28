@@ -10,6 +10,7 @@
     %link{rel: "stylesheet", type: "text/css", href: "bundles/bundle.css"}
     %link{rel: "stylesheet", type: "text/css", href: "css/app.css"}
     %script{type: "text/javascript", src: "bundles/bundle.js"}
+    %script{type: "text/javascript", src: "js/restfulizer.js"}
     %script{type: "text/javascript", src: "js/app.js"}
   %body
     %nav.navbar.navbar-default.navbar-fixed-top
@@ -23,9 +24,11 @@
           %a.navbar-brand{:href => "/"} Budgeter
         #navbar.navbar-collapse.collapse
           %ul.nav.navbar-nav
+            @section('navigation')
             - if(Auth::user())
               %li
                 %a{href: route('home')} Home
+            @show
 
           %ul.nav.navbar-nav.navbar-right
             - if(Auth::user())
@@ -33,9 +36,7 @@
                 %a{href: '#'}
                   = Auth::user()->name
               %li
-                %a{href: route('logout.post'), onclick: "event.preventDefault(); document.getElementById('logout-form').submit();"} Logout
-                %form#logout-form{action: route("logout.post"), method: "POST", style: "display: none;"}
-                  != csrf_field()
+                %a{href: route('logout.post'), 'data-method' => "DELETE", 'data-token' => csrf_token()} Logout
             - else
               %li
                 %a{href: route("login.get")} Login

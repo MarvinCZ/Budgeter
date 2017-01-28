@@ -2,6 +2,13 @@
 
 @section('title', 'Dashboard')
 
+@section('navigation')
+@parent
+%li
+  %a{href: route('members.create', $group)}
+    Create member
+@stop
+
 @section('content')
 
 %h2 Group balance
@@ -11,7 +18,7 @@
       %div{class: 'col-md-' . (6-$chunk->count())}
     - foreach($chunk as $member)
       .col-md-2
-        %a{href: '#'}
+        %a{href: route('members.show', [$group, $member])}
           .member{class: $member->user_id == Auth::user()->id ? 'me' : ''}
             .picture
               %img.img-responsive{src: 'images/avatars/default-user.png'}

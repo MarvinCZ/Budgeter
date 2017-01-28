@@ -8,6 +8,8 @@ class Member extends BaseModel
 {
     protected $table = 'members';
 
+    protected $fillable = ['name'];
+
     protected $rules = [
         'group_id' => 'exists:groups,id',
         'name' => 'required|max:50',

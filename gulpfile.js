@@ -9,6 +9,7 @@ elixir(function(mix) {
     mix.sass('app.scss');
     mix.coffee('app.coffee');
     mix.copy('bower_components/bootstrap/fonts', 'public/fonts');
+    mix.copy('bower_components/components-font-awesome/fonts/', 'public/bundles');
     mix.browserSync({
         proxy: "budgeter.loc"
     });
