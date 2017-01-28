@@ -85,4 +85,9 @@ class User extends Authenticatable implements JWTSubject
             'email' => $this->email
         ];
     }
+
+    public function relatedGroups()
+    {
+        return $this->belongsToMany('App\Models\Group', 'members');
+    }
 }
