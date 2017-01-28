@@ -29,6 +29,7 @@ body {
 
 .members {
     .member {
+        margin-bottom: 10px;
         background-color: #D8D8D8;
 
         .picture {
@@ -44,6 +45,7 @@ body {
 
             .name {
                 float: left;
+                color: #333;
             }
 
             .budget {
