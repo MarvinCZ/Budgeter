@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -31,6 +32,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
     use EntrustUserTrait;
 
     /**

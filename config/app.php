@@ -149,6 +149,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -216,6 +217,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Notification' => Illuminate\Support\Facades\Notification::class,
 
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
         'Geotools' => Toin0u\Geotools\Facade\Geotools::class,
