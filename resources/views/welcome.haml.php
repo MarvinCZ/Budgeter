@@ -2,6 +2,7 @@
 
 @section('content')
 
-.title Budgeter
+.text-center
+  .title Budgeter
 
 @stop

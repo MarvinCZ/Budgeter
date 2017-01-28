@@ -15,15 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('group', 'GroupController');
 
-Route::resource('group/{group}/members', 'MemberController', [
-    'only' => ['create', 'store', 'show', 'edit', 'update', 'destroy']
-]);
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('group', 'GroupController');
 
-Route::resource('group/{group}/transaction', 'TransactionController', [
-    'only' => ['index', 'store', 'show', 'update', 'destroy']
-]);
+    Route::resource('group/{group}/members', 'MemberController', [
+        'only' => ['create', 'store', 'show', 'edit', 'update', 'destroy']
+    ]);
+
+    Route::resource('group/{group}/transaction', 'TransactionController', [
+        'only' => ['index', 'store', 'show', 'update', 'destroy']
+    ]);
+});
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login.get');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
