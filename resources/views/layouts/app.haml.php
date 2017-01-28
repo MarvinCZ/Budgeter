@@ -12,17 +12,36 @@
     %script{type: "text/javascript", src: "bundles/bundle.js"}
     %script{type: "text/javascript", src: "js/app.js"}
   %body
-    %nav
-      %a{href: "/"} Landing Page
-      - if(Auth::user())
-        Logged as {{ Auth::user()->name }}
-        %a{href: route('home')} Home
-        %a{href: route('logout.post'), onclick: "event.preventDefault(); document.getElementById('logout-form').submit();"} Logout
-        %form#logout-form{action: route("logout.post"), method: "POST", style: "display: none;"}
-          {{ csrf_field() }}
-      - else
-        %a{href: route("login.get")} Login
-        %a{href: route("register.get")} Register
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "/"} Budgeter
+        #navbar.navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            - if(Auth::user())
+              %li
+                %a{href: route('home')} Home
+
+          %ul.nav.navbar-nav.navbar-right
+            - if(Auth::user())
+              %li
+                %a{href: '#'}
+                  = Auth::user()->name
+              %li
+                %a{href: route('logout.post'), onclick: "event.preventDefault(); document.getElementById('logout-form').submit();"} Logout
+                %form#logout-form{action: route("logout.post"), method: "POST", style: "display: none;"}
+                  != csrf_field()
+            - else
+              %li
+                %a{href: route("login.get")} Login
+              %li
+                %a{href: route("register.get")} Register
+
     .container.text-center
       .content
         @yield('content')
