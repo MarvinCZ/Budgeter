@@ -28,6 +28,7 @@
             - if(Auth::user())
               %li
                 %a{href: route('group.index')} Group list
+            @show
 
           %ul.nav.navbar-nav.navbar-right
             - if(Auth::user())
