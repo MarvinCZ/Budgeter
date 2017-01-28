@@ -43,6 +43,6 @@
               %li
                 %a{href: route("register.get")} Register
 
-    .container.text-center
+    .container
       .content
         @yield('content')
