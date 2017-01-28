@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('group', 'GroupController');
 
@@ -28,3 +26,15 @@ Route::resource('group/{group}/member', 'MemberController', [
 Route::resource('group/{group}/transaction', 'TransactionController', [
     'only' => ['index', 'store', 'show', 'update', 'destroy']
 ]);
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login.get');
+Route::post('login', 'Auth\LoginController@login')->name('login.post');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout.post');
+
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register.get');
+Route::post('register', 'Auth\RegisterController@register')->name('register.post');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset.get');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset.post');
