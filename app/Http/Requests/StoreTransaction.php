@@ -27,7 +27,8 @@ class StoreTransaction extends FormRequest
         return [
             'value' => 'required|numeric',
             'description' => 'required|max:150',
-            'member_ids' => 'required|valid_members:group'
+            'member_ids' => 'required|valid_members:group',
+            'payer_id' => 'required|valid_member:group'
         ];
     }
 

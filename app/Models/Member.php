@@ -40,6 +40,19 @@ class Member extends BaseModel
         $this->save();
     }
 
+    public static function updateCachedBudgets($ids)
+    {
+        $sql = \DB::table('member_transactions')
+            ->whereIn('member_id', $ids)
+            ->groupBy('member_id')
+            ->selectRaw('member_id, SUM(value) AS value')
+            ->toSql();
+        \DB::select("UPDATE members m
+                    RIGHT JOIN ($sql) s ON m.id = s.member_id
+                    SET m.cached_budget = s.value;
+                ",$ids);
+    }
+
     public function setCachedBudgetAttribute()
     {
         throw new \App\Exceptions\ReadOnlyAttributeException("Can not set cachedBudget directly.");

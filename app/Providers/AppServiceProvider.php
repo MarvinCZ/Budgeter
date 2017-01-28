@@ -21,6 +21,14 @@ class AppServiceProvider extends ServiceProvider
                 count();
             return $count == count($value);
         });
+
+        \Validator::extend('valid_member', function($attributes, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            $group = $validator->attributes()[$parameters[0]];
+            $count = $group->members()->
+                where('id', $value)->
+                count();
+            return $count == 1;
+        });
     }
 
     /**

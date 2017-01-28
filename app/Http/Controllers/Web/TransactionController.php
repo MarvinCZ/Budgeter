@@ -51,16 +51,24 @@ class TransactionController extends Controller
         //TODO create revers transaction
 
         $price = (int)($data['value'] / count($data['member_ids']));
-        $data = [];
+        $transactions = [];
         foreach ($request->all()['member_ids'] as $id) {
-            $data []= [
+            $transactions []= [
                 'description' => $transaction->description,
                 'value' => -$price,
                 'member_id' => $id,
                 'transaction_id' => $transaction->id
             ];
         }
-        MemberTransaction::insert($data);
+        $transactions []= [
+            'description' => $transaction->description,
+            'value' => $data['value'],
+            'member_id' => $data['payer_id'],
+            'transaction_id' => $transaction->id
+        ];
+
+        MemberTransaction::insert($transactions);
+        Member::updateCachedBudgets($data['member_ids']);
 
         return redirect()->route('group.show', $group);
     }

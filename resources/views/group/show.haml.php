@@ -46,7 +46,7 @@
     .row.members
       - foreach($group->members as $member)
         .col-md-2
-          .member.selectable
+          .member.selectable.selectable-many
             != Form::checkbox('member_ids[]', $member->id, null, ['class' => 'hidden'])
             .picture
               %img.img-responsive{src: 'images/avatars/default-user.png'}
@@ -56,6 +56,23 @@
     - if ($errors->has('member_ids'))
       %span.help-block
         %strong #{$errors->first('member_ids')}
+//Select payer
+.form-group{class: $errors->has('payer_id') ? 'has-error' : ''}
+  != Form::label('payer_id', 'Who did pay?', ['class' => 'col-sm-3 control-label'])
+  .col-sm-9
+    .row.members
+      - foreach($group->members as $member)
+        .col-md-2
+          .member.selectable.selectable-one
+            != Form::radio('payer_id', $member->id, null, ['class' => 'hidden'])
+            .picture
+              %img.img-responsive{src: 'images/avatars/default-user.png'}
+            .detail
+              .name
+                = $member->name
+    - if ($errors->has('payer_id'))
+      %span.help-block
+        %strong #{$errors->first('payer_id')}
 
 .form-group
   .col-sm-offset-3.col-sm-9
