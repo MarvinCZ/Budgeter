@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::resource('group', 'GroupController');
 
 Route::resource('group/{group}/members', 'MemberController', [

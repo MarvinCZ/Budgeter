@@ -25,7 +25,7 @@
             .detail
               .name
                 = $member->name
-              .budget{class: $member->cachedBudget >= 0 ? 'possitive' : 'negative'}
+              .budget{class: $member->cachedBudget >= 0 ? 'positive' : 'negative'}
                 = $member->cachedBudget . ' CZK'
 
 %h2 Create new transaction

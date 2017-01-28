@@ -27,8 +27,7 @@
             @section('navigation')
             - if(Auth::user())
               %li
-                %a{href: route('home')} Home
-            @show
+                %a{href: route('group.index')} Group list
 
           %ul.nav.navbar-nav.navbar-right
             - if(Auth::user())
