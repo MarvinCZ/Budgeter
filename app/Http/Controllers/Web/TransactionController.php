@@ -67,6 +67,8 @@ class TransactionController extends Controller
             'transaction_id' => $transaction->id
         ];
 
+        array_push($data['member_ids'], $data['payer_id']);
+
         MemberTransaction::insert($transactions);
         Member::updateCachedBudgets($data['member_ids']);
 

@@ -10,30 +10,39 @@
     %h3 Groups that you are in
     - if (count(Auth::user()->relatedGroups) > 0)
       - foreach (Auth::user()->relatedGroups as $group)
-        .well
-          %h3
-            %a{href: route('group.show', $group->id)} #{ $group->name }
-          %strong{class: $group->pivot->cached_budget >= 0 ? 'text-success' : 'text-danger'} #{ $group->pivot->cached_budget } Kč
+        .well.well-group
+          .well-content
+            %a{href: route('group.show', $group->id)}
+              = $group->name
+          .well-btns
+            %a{href: route('group.edit', $group->id)}
+              .well-btn.btn-warning
+                %i.fa.fa-eye
+                Show
+            .well-btn
+              %strong{class: $group->pivot->cached_budget >= 0 ? 'text-success' : 'text-danger'}
+                = $group->pivot->cached_budget . ' Kč'
     - else
       %p You are not in any groups
   .col-md-6
     %h3 Groups that you created
     - if (count(Auth::user()->groups) > 0)
       - foreach (Auth::user()->groups as $group)
-        .well
-          %h3
-            %a{href: route('group.show', $group->id)} #{ $group->name }
-          .row
-            .col-xs-2.col-xs-offset-4
-              %a{href: route('group.edit', $group->id)}
-                %i.fa.fa-pencil Edit
-            .col-xs-2
-              %a{href: route('group.destroy', $group->id), 'data-method' => "DELETE", 'data-token' => csrf_token()}
-                %i.fa.fa-remove Remove
+        .well.well-group
+          .well-content
+            %a{href: route('group.show', $group->id)}
+              = $group->name
+          .well-btns
+            %a{href: route('group.edit', $group->id)}
+              .well-btn.btn-success
+                %i.fa.fa-pencil
+                Edit
+            %a{href: route('group.destroy', $group->id), 'data-method' => "DELETE", 'data-token' => csrf_token()}
+              .well-btn.btn-danger
+                %i.fa.fa-remove
+                Remove
     - else
       %p You did not create any groups
-
-.row.text-center
-  %a.btn.btn-default.btn-lg{href: route('group.create')} Create new group
+    %a.btn.btn-primary.btn-lg.btn-block{href: route('group.create')} Create new group
 
 @stop

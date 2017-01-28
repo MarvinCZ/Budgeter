@@ -17,7 +17,7 @@
     - if ($chunk->count() != 6)
       %div{class: 'col-md-' . (6-$chunk->count())}
     - foreach($chunk as $member)
-      .col-md-2
+      .col-md-2.col-xs-6
         %a{href: route('members.show', [$group, $member])}
           .member{class: $member->user_id == Auth::user()->id ? 'me' : ''}
             .picture
@@ -61,7 +61,7 @@
           .col-sm-9
             .row.members
               - foreach($group->members as $member)
-                .col-md-3
+                .col-md-3.col-xs-4
                   .member.selectable.selectable-many
                     != Form::checkbox('member_ids[]', $member->id, null, ['class' => 'hidden'])
                     .picture
@@ -78,7 +78,7 @@
           .col-sm-9
             .row.members
               - foreach($group->members as $member)
-                .col-md-3
+                .col-md-3.col-xs-4
                   .member.selectable.selectable-one
                     != Form::radio('payer_id', $member->id, null, ['class' => 'hidden'])
                     .picture

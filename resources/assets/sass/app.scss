@@ -115,3 +115,49 @@ body {
 h1,h2,h3,h4,h5,h6,.title {
     text-align: center;
 }
+
+.well {
+    overflow: auto;
+    .well-content {
+        float: left;
+    }
+
+    .well-btns {
+        margin-top: -19px;
+        margin-right: -19px;
+        margin-bottom: -19px;
+        float: right;
+
+        .well-btn {
+            height: 50px;
+            line-height: 50px;
+            padding-right: 10px;
+            padding-left: 10px;
+            box-sizing: border-box;
+            text-align: left;
+            border-left: 1px solid #E3E3E3;
+            border-bottom: 1px solid #E3E3E3;
+            color: #fff;
+            text-decoration: none;
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+        }
+
+    }
+}
+
+.well-group {
+    .well-content {
+        width: calc(100% - 100px);
+        height: 60px;
+        line-height: 60px;
+        font-weight: bold;
+        font-size: 2em;
+    }
+}
+
+a:hover {
+    text-decoration: none;
+}
