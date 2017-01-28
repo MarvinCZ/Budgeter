@@ -2,7 +2,7 @@
 
 @section('title')
 
-Login
+Reset Password
 
 @stop
 
@@ -13,14 +13,15 @@ Login
     .col-md-8.col-md-offset-2
       .panel.panel-default
         .panel-heading
-          Login
+          Reset Password
         .panel-body
-          %form.form-horizontal{role: "form", method: "POST", action: route('login.post')}
+          %form.form-horizontal{role: "form", method: "POST", action: route('password.reset.post')}
             {{ csrf_field() }}
+            %input{type: "hidden", name: "token", value: $token}
             .form-group{class: $errors->has('email') ? 'has-error' : ''}
               %label.col-md-4.control-label{for: "email"} E-Mail Address
               .col-md-6
-                %input#email.form-control{type: "email", name: "email", value: old('email'), required: "required", autofocus: "autofocus"}
+                %input#email.form-control{type: "email", name: "email", value: $email or old('email'), required: "required", autofocus: "autofocus"}
                 - if ($errors->has('email'))
                   %span.help-block
                     %strong {{ $errors->first('email') }}
@@ -33,15 +34,16 @@ Login
                   %span.help-block
                     %strong {{ $errors->first('password') }}
 
-            .form-group.text-left
-              .col-md-6.col-md-offset-4
-                .checkbox
-                  %label
-                    %input{type:"checkbox", name: "remember"} Remember Me
+            .form-group{class: $errors->has('password_confirmation') ? 'has-error' : ''}
+              %label.col-md-4.control-label{for: "password_confirmation"} Confirm Password
+              .col-md-6
+                %input#password_confirmation.form-control{type: "password", name: "password_confirmation", required: "required"}
+                - if ($errors->has('password_confirmation'))
+                  %span.help-block
+                    %strong {{ $errors->first('password_confirmation') }}
 
             .form-group.text-left
-              .col-md-8.col-md-offset-4
-                %button.btn.btn-primary{type: "submit"} Login
-                %a.btn.btn-link{href: route('password.email.get')} Forgot Your Password?
+              .col-md-6.col-md-offset-4
+                %button.btn.btn-primary{type: "submit"} Reset Password
 
 @stop

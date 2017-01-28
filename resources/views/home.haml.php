@@ -8,6 +8,6 @@ Home
 
 @section('content')
 
-%h2 Dashboard
+.title Dashboard
 
 @stop
