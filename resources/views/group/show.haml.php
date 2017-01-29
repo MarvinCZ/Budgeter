@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', trans('layout.dashboard'))
 
 @section('navigation')
 @parent
 %li
   %a{href: route('members.create', $group)}
-    Create member
+    #{ trans('layout.member_create.action') }
 @stop
 
 @section('content')
 
-%h2 Group balance
+%h2 #{ trans('layout.group_balance') }
 - foreach($group->members->chunk(6) as $chunk)
   .row.members
     - if ($chunk->count() != 6)
@@ -32,14 +32,14 @@
   .col-md-8.col-md-offset-2
     .panel.panel-default
       .panel-heading
-        Create new transaction
+        #{ trans('layout.transaction_create.page') }
       .panel-body
         != Form::open(['route' => ['transaction.store', $group], 'class' => 'form-horizontal'])
         != Form::token()
 
         //Description
         .form-group{class: $errors->has('description') ? 'has-error' : ''}
-          != Form::label('description', 'What did you pay for?', ['class' => 'col-sm-3 control-label'])
+          != Form::label('description', trans('layout.transaction_create.description'), ['class' => 'col-sm-3 control-label'])
           .col-sm-9
             != Form::text('description', null, ['class' => 'form-control'])
             - if ($errors->has('description'))
@@ -48,7 +48,7 @@
 
         //Value
         .form-group{class: $errors->has('value') ? 'has-error' : ''}
-          != Form::label('value', 'How much did you pay?', ['class' => 'col-sm-3 control-label'])
+          != Form::label('value', trans('layout.transaction_create.value'), ['class' => 'col-sm-3 control-label'])
           .col-sm-9
             != Form::number('value', 100, ['class' => 'form-control'])
             - if ($errors->has('value'))
@@ -57,7 +57,7 @@
 
         //Select members
         .form-group{class: $errors->has('member_ids') ? 'has-error' : ''}
-          != Form::label('member_ids[]', 'Who did you pay for?', ['class' => 'col-sm-3 control-label'])
+          != Form::label('member_ids[]', trans('layout.transaction_create.pay_for'), ['class' => 'col-sm-3 control-label'])
           .col-sm-9
             .row.members
               - foreach($group->members as $member)
@@ -74,7 +74,7 @@
                 %strong #{$errors->first('member_ids')}
         //Select payer
         .form-group{class: $errors->has('payer_id') ? 'has-error' : ''}
-          != Form::label('payer_id', 'Who did pay?', ['class' => 'col-sm-3 control-label'])
+          != Form::label('payer_id', trans('layout.transaction_create.pay_who'), ['class' => 'col-sm-3 control-label'])
           .col-sm-9
             .row.members
               - foreach($group->members as $member)
@@ -92,7 +92,7 @@
 
         .form-group
           .col-sm-offset-3.col-sm-9
-            != Form::submit('Create a transaction', ['class' => 'btn btn-block btn-primary'])
+            != Form::submit(trans('layout.transaction_create.action'), ['class' => 'btn btn-block btn-primary'])
 
         != Form::close()
 

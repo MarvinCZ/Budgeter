@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Group List')
+@section('title')
+
+#{ trans('layout.group_list') }
+
+@stop
 
 @section('content')
 
-%h2.text-center List of groups
+%h2.text-center #{ trans('layout.group_list') }
 .row.text-center
   .col-md-6
-    %h3 Groups that you are in
+    %h3 #{ trans('layout.groups_member.heading') }
     - if (count(Auth::user()->relatedGroups) > 0)
       - foreach (Auth::user()->relatedGroups as $group)
         .well.well-group
@@ -18,14 +22,14 @@
             %a{href: route('group.edit', $group->id)}
               .well-btn.btn-warning
                 %i.fa.fa-eye
-                Show
+                #{ trans('layout.show') }
             .well-btn
               %strong{class: $group->pivot->cached_budget >= 0 ? 'text-success' : 'text-danger'}
                 = $group->pivot->cached_budget . ' Kč'
     - else
-      %p You are not in any groups
+      %p #{ trans('layout.groups_member.none') }
   .col-md-6
-    %h3 Groups that you created
+    %h3 #{ trans('layout.groups_owner.heading') }
     - if (count(Auth::user()->groups) > 0)
       - foreach (Auth::user()->groups as $group)
         .well.well-group
@@ -36,13 +40,13 @@
             %a{href: route('group.edit', $group->id)}
               .well-btn.btn-success
                 %i.fa.fa-pencil
-                Edit
+                #{ trans('layout.edit') }
             %a{href: route('group.destroy', $group->id), 'data-method' => "DELETE", 'data-token' => csrf_token()}
               .well-btn.btn-danger
                 %i.fa.fa-remove
-                Remove
+                #{ trans('layout.delete') }
     - else
-      %p You did not create any groups
-    %a.btn.btn-primary.btn-lg.btn-block{href: route('group.create')} Create new group
+      %p #{ trans('layout.groups_owner.none') }
+    %a.btn.btn-primary.btn-lg.btn-block{href: route('group.create')} #{ trans('layout.group_create.action') }
 
 @stop
